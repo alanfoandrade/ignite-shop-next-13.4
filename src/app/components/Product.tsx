@@ -1,9 +1,10 @@
-import Image, { StaticImageData } from 'next/image'
-import ProductFooter from './ProductFooter'
+import Image from 'next/image'
+import { ProductFooter } from './ProductFooter'
 
 export type ProductItem = {
-  imageUrl: StaticImageData
-  price: string
+  id: string
+  imageUrl: string
+  price: number
   title: string
 }
 
@@ -11,7 +12,7 @@ interface ProductProps {
   product: ProductItem
 }
 
-export default function Product({ product }: ProductProps) {
+export function Product({ product }: ProductProps) {
   return (
     <a
       href=""
