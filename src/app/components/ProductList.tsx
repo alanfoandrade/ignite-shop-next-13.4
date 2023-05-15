@@ -1,27 +1,16 @@
-'use client'
-import { useKeenSlider } from 'keen-slider/react'
-
-import { Product, ProductItem } from './Product'
-
-import 'keen-slider/keen-slider.min.css'
-import { stripe } from '@/lib/stripe'
-
-import productImg from '../../assets/camisetas/shirt-01.png'
+import { ProductItem } from './Product'
+import { ProductCarousel } from './ProductCarousel'
 import Stripe from 'stripe'
 
-export async function ProductList() {
-  const [sliderRef] = useKeenSlider({
-    slides: {
-      perView: 2.5,
-      spacing: 48,
-    },
-  })
+import productImg from '../../assets/shirt-01.png'
+import { listProducts } from '@/lib/Products/listProducts'
 
-  const { data } = await stripe.products.list({
-    expand: ['data.default_price'],
-  })
+export const revalidate = 5
 
-  const products: ProductItem[] = data.map((product) => {
+export const ProductList = async () => {
+  const productsList = await listProducts()
+
+  const products: ProductItem[] = productsList.map((product) => {
     const price = product.default_price as Stripe.Price
 
     return {
@@ -32,13 +21,5 @@ export async function ProductList() {
     }
   })
 
-  return (
-    <ul ref={sliderRef} className="keen-slider flex overflow-hidden">
-      {products.map((product, index) => (
-        <li key={index}>
-          <Product product={product} />
-        </li>
-      ))}
-    </ul>
-  )
+  return <ProductCarousel products={products} />
 }
