@@ -1,6 +1,10 @@
 import { Suspense } from 'react'
 import { ProductList } from '../components/ProductList'
 
+export const fetchCache = 'default-no-store'
+
+export const revalidate = 60
+
 export default function Home() {
   return (
     <main className="w-full">

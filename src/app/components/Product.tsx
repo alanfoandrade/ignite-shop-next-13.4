@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import { ProductFooter } from './ProductFooter'
 
+import productImg from '../../assets/shirt-01.png'
+
 export type ProductItem = {
   id: string
-  imageUrl: string
-  price: number
+  imageUrl?: string
+  price: string
   title: string
 }
 
@@ -20,7 +22,7 @@ export function Product({ product }: ProductProps) {
     >
       <Image
         className="object-cover"
-        src={product.imageUrl}
+        src={product.imageUrl || productImg}
         alt=""
         width={520}
         height={480}
