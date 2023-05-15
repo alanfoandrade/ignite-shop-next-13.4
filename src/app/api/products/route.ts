@@ -1,22 +1,16 @@
 import 'server-only'
 
-import { stripe } from '@/lib/stripe'
 import Stripe from 'stripe'
-import { cache } from 'react'
+import { NextResponse } from 'next/server'
 
-export type ListProductItem = {
-  id: string
-  imageUrl?: string
-  price: string
-  title: string
-}
+import { stripe } from '@/lib/stripe'
 
-export const listProducts = cache(async (): Promise<ListProductItem[]> => {
+export async function GET(request: Request) {
   const { data } = await stripe.products.list({
     expand: ['data.default_price'],
   })
 
-  return data.map((product) => {
+  const products = data.map((product) => {
     const price = product.default_price as Stripe.Price
 
     return {
@@ -29,4 +23,6 @@ export const listProducts = cache(async (): Promise<ListProductItem[]> => {
       title: product.name,
     }
   })
-})
+
+  return NextResponse.json(products, { status: 200 })
+}

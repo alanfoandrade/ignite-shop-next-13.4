@@ -1,3 +1,6 @@
+import { Suspense } from 'react'
+import { ProductDetails } from '../components/ProductDetails'
+
 export const metadata = {
   title: 'Produto',
 }
@@ -10,8 +13,11 @@ interface ProductProps {
 
 export default function Product({ params }: ProductProps) {
   return (
-    <div>
-      <h1>Product: {`{ "id": "${params.id}" }`}</h1>
-    </div>
+    <main className="h-screen w-full">
+      <Suspense fallback={<p>Carregando produto...</p>}>
+        {/** @ts-expect-error Async Server Component */}
+        <ProductDetails productId={params.id} />
+      </Suspense>
+    </main>
   )
 }

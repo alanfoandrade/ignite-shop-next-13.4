@@ -1,7 +1,9 @@
 import Image from 'next/image'
+import Link from 'next/link'
+
 import { ProductFooter } from './ProductFooter'
 
-import productImg from '../../assets/shirt-01.png'
+import productImg from '@/assets/shirt-01.png'
 
 export type ProductItem = {
   id: string
@@ -16,8 +18,9 @@ interface ProductProps {
 
 export function Product({ product }: ProductProps) {
   return (
-    <a
-      href=""
+    <Link
+      prefetch={false}
+      href={`/product/${product.id}`}
       className="keen-slider__slide group relative flex h-[656px] items-center justify-center overflow-hidden rounded-lg bg-gradient-to-b from-[#1ea483] from-0% to-[#7465d4] to-100% p-1"
     >
       <Image
@@ -29,6 +32,6 @@ export function Product({ product }: ProductProps) {
       />
 
       <ProductFooter product={product} />
-    </a>
+    </Link>
   )
 }
