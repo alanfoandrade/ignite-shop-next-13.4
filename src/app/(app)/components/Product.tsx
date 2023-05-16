@@ -7,7 +7,7 @@ import productImg from '@/assets/shirt-01.png'
 
 export type ProductItem = {
   id: string
-  imageUrl?: string
+  imageUrl?: string | null
   price: string
   title: string
 }

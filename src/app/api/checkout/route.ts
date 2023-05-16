@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Price not found.' }, { status: 400 })
   }
 
-  const successUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/success`
+  const successUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/success?session_id={CHECKOUT_SESSION_ID}`
 
   const cancelUrl = `${process.env.NEXT_PUBLIC_NEXT_URL}/`
 
@@ -24,8 +24,5 @@ export async function POST(request: Request) {
     ],
   })
 
-  return NextResponse.json(
-    { checkoutUrl: checkoutSession.url },
-    { status: 201 },
-  )
+  return NextResponse.json(checkoutSession, { status: 201 })
 }

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 type DetailedProduct = {
+  id: string
   title: string
   price: string
   description?: string | null
@@ -27,7 +28,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
       const { checkoutUrl } = await createCheckouts(product.defaultPriceId)
 
-      push(checkoutUrl)
+      if (checkoutUrl) {
+        push(checkoutUrl)
+      }
     } catch (err) {
       alert('Falha ao redirecionar ao checkout!')
 

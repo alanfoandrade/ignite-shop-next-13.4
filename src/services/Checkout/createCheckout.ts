@@ -1,9 +1,7 @@
-interface FetchResponse extends Response {
-  checkoutUrl: string
-}
+import Stripe from 'stripe'
 
 export interface CreateCheckoutItem {
-  checkoutUrl: string
+  checkoutUrl: string | null
 }
 
 export const createCheckouts = async (
@@ -17,7 +15,7 @@ export const createCheckouts = async (
     },
   )
 
-  const { checkoutUrl } = (await response.json()) as FetchResponse
+  const { url } = (await response.json()) as Stripe.Checkout.Session
 
-  return { checkoutUrl }
+  return { checkoutUrl: url }
 }

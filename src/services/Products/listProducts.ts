@@ -1,8 +1,9 @@
 import { RequestInit } from 'next/dist/server/web/spec-extension/request'
+import Stripe from 'stripe'
 
 export interface ListProductItem {
   id: string
-  imageUrl?: string
+  imageUrl?: string | null
   price: string
   title: string
 }
@@ -19,7 +20,21 @@ export const listProducts = async ({
     },
   )
 
-  const products = (await response.json()) as ListProductItem[]
+  const stripeProducts = (await response.json()) as Stripe.Product[]
+
+  const products = stripeProducts.map((stripeProduct) => {
+    const price = stripeProduct.default_price as Stripe.Price
+
+    return {
+      id: stripeProduct.id,
+      imageUrl: stripeProduct.images[0],
+      price: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format((price.unit_amount || 0) / 100),
+      title: stripeProduct.name,
+    }
+  })
 
   return products
 }
