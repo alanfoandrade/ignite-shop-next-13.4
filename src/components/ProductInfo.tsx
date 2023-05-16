@@ -1,6 +1,6 @@
 'use client'
 
-import Button from '@/app/components/Button'
+import Button from '@/components/Button'
 import { createCheckouts } from '@/services/Checkout/createCheckout'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'

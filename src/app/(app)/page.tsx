@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { ProductList } from './components/ProductList'
+import { ProductList } from '@/components/ProductList'
 
 export const metadata = {
   title: 'Produtos',
